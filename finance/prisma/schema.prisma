@@ -1,0 +1,30 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model Transaction {
+  id             String   @id @default(cuid())
+  type           String // "INCOME" or "EXPENSE"
+  amount         Float
+  category       String // e.g., "Rent", "Food", "Subscriptions", "Salary"
+  description    String?
+  date           DateTime
+  isSubscription Boolean  @default(false)
+  createdAt      DateTime @default(now())
+}
+
+model StockHolding {
+  id        String   @id @default(cuid())
+  ticker    String   @unique // e.g., "AAPL", "MSFT"
+  shares    Float
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
